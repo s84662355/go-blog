@@ -1,0 +1,8 @@
+syntax = "proto3";
+package protocol;
+
+message GoBlogRequestHead {
+    uint32 bodyLen = 1;//请求体长度
+    string langType = 2;//客户端语言
+    string date = 3;//日期时间
+}

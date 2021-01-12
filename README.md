@@ -1,1 +1,1 @@
-# go-blog
+# go-GoBlog
