@@ -14,6 +14,7 @@ var mysqlDatabases sync.Map
 func InitMysqlConnect() {
 
 	for k, v := range mysqlConfig.Config.Conns {
+
 		fmt.Println(v.GetDsn())
 
 		ConnectMysql(v.GetDsn(), k)

@@ -43,8 +43,9 @@ func init() {
 
 //查找
 func gets() {
+
 	//通过id查找
-	get1, err := client.Get().Index("megacorp").Type("employee").Id("2").Do(context.Background())
+	get1, err := client.Get().Index("megacorp").Type("_doc").Id("1").Do(context.Background())
 	if err != nil {
 		panic(err)
 	}
@@ -58,6 +59,7 @@ func gets() {
 		}
 		fmt.Println(bb.FirstName)
 		fmt.Println(string(*get1.Source))
+		fmt.Println(get1)
 
 	}
 }

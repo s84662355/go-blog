@@ -49,6 +49,12 @@ func (a Article) Get(id interface{}) Article {
     return res
 }
 
+func (a Article) GetUnscoped(id interface{}) Article {
+    res := Article{}
+    a.Model().Where("id = ?", id).Unscoped().First(&res)
+    return res
+}
+
 func (a Article) Info(id interface{}) ArticleData {
     var results ArticleData
     query := a.Model()
@@ -84,6 +90,7 @@ func (a *Article) Update() {
 func (a *Article) Delete() {
     deletedAt := helper.JSONTime{}.Create()
     a.DeletedAt = &deletedAt
+    a.UpdatedAt = helper.JSONTime{}.Create()
     a.Model().Save(a)
 }
 

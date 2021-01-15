@@ -73,7 +73,8 @@ func (t JSONTime) Create() JSONTime {
 	return tt
 }
 
-//转为毫秒
-func (t *JSONTime) UnixMilli() int64 {
-	return t.Time.UnixNano() / 1e6
+//
+func (t *JSONTime) Unix() int64 {
+	fmt.Println(t.Time.Unix())
+	return t.Time.Unix()
 }
