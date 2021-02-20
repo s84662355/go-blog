@@ -16,31 +16,42 @@ type CanalListener struct {
 
 func InitCanal() CanalListener {
 	can := CanalListener{}
-	can.ccc = make(chan int, 50)
+	can.ccc = make(chan int, 10)
 	return can
 }
 
 func (l *CanalListener) Run(connector *client.SimpleCanalConnector, handler func(rr Row)) {
 	go func() {
+		defer func() {
+			if r := recover(); r != nil {
+				fmt.Println("  Recovered in PanicError", r)
+			}
+			fmt.Println("canal 出错")
+
+		}()
 		for {
 			message, err := connector.Get(100, nil, nil)
 			if err != nil {
 			}
 			batchId := message.Id
 			if batchId == -1 || len(message.Entries) <= 0 {
-				time.Sleep(300 * time.Millisecond)
-				fmt.Println("===没有数据了===")
+				time.Sleep(800 * time.Millisecond)
+				fmt.Println(connector.Filter + "===没有数据了===")
 				continue
 			}
+			///connector.Ack(batchId)
 			l.goRun(message.Entries, handler)
+			//connector.Ack(batchId)
 		}
 	}()
 }
 
 func (l *CanalListener) goRun(entrys []protocol.Entry, handler func(rr Row)) {
 	for _, entry := range entrys {
+		fmt.Println("-----处理")
 		l.ccc <- 1
 		go l.runn(entry, handler)
+		fmt.Println("-----处理后")
 	}
 }
 

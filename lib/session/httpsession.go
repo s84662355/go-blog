@@ -38,7 +38,7 @@ func (l *httpSession) init(token string) error {
 	for i, v := range val {
 		l.data[i] = v
 	}
-	go redisClient.Expire(l.token, 1000*time.Second)
+	go redisClient.Expire(l.token, 3000*time.Second)
 	return nil
 }
 

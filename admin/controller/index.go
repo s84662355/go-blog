@@ -12,7 +12,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"path"
+	_ "path"
 	_ "strconv"
 	"strings"
 	"time"
@@ -100,7 +100,7 @@ func (*indexController) ImgUpload(c echo.Context) error {
 	relative := tm2.Format("20060102") + "/"
 	os.MkdirAll(uploadDir+relative, os.ModePerm)
 	//扩展名
-	ext := path.Ext(f.Filename)
+	///	ext := path.Ext(f.Filename)
 	relative = f.Filename
 	src, err := f.Open()
 	if err != nil {
@@ -127,7 +127,7 @@ func (*indexController) ImgUpload(c echo.Context) error {
 	//保存成功返回正确的Json数据
 	//data := "/admin/showimage?imgname=upload/admin/" + relative
 	///data := "/admin/" + relative
-	return c.JSON(http.StatusOK, response.ShowData(res))
+	return c.JSON(http.StatusOK, response.ShowData("http://image.chenjiahao.link/"+relative))
 }
 
 func (*indexController) ReadImage(c echo.Context) error {

@@ -4,6 +4,7 @@ import (
 	"GoBlog/config"
 	_ "GoBlog/config/nsq"
 	"GoBlog/config/redis"
+	"GoBlog/lib/es"
 	"GoBlog/lib/mysql"
 	"GoBlog/logic/controller"
 	"GoBlog/service"
@@ -21,7 +22,7 @@ func (cv *CustomValidator) Validate(i interface{}) error {
 }
 
 func main() {
-
+	es.InitEsConnect()
 	mysql.ConnectMysql(config.MySQL, "default")
 	defer mysql.DisconnectMysql()
 

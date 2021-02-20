@@ -7,6 +7,7 @@ import (
 	"GoBlog/admin/controller/role"
 	"GoBlog/admin/controller/user"
 	_ "GoBlog/config"
+	"GoBlog/lib/es"
 	_ "GoBlog/lib/helper"
 	"GoBlog/lib/mysql"
 	_ "encoding/json"
@@ -30,7 +31,7 @@ func main() {
 		mysql.ConnectMysql(config.MySQL, "default")
 		defer mysql.DisconnectMysql()
 	*/
-
+	es.InitEsConnect()
 	mysql.InitMysqlConnect()
 
 	e := echo.New()

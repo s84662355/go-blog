@@ -8,6 +8,7 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/elastic/go-elasticsearch/v7 v7.10.0 // indirect
 	github.com/go-delve/delve v1.5.1 // indirect
+	github.com/go-ini/ini v1.62.0 // indirect
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/go-redis/redis v6.15.8+incompatible
@@ -36,13 +37,13 @@ require (
 	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/nsqio/go-nsq v1.0.8
 	github.com/olivere/elastic v6.2.35+incompatible
-	github.com/olivere/elastic/v7 v7.0.22 // indirect
+	github.com/olivere/elastic/v7 v7.0.22
 	github.com/robfig/cron v1.2.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/ryanuber/columnize v2.1.2+incompatible // indirect
 	github.com/s84662355/go-redis-lock v0.0.0-20200526130243-a47ca8ac207a // indirect
 	github.com/s84662355/goLogger v0.0.0-20200509011756-36ddc586cf09
-	github.com/streadway/amqp v0.0.0-20200108173154-1c71cc93ed71
+	github.com/streadway/amqp v1.0.0
 	github.com/tealeg/xlsx v1.0.5
 	github.com/therecipe/env_darwin_amd64_513 v0.0.0-20190626001412-d8e92e8db4d0 // indirect
 	github.com/therecipe/env_linux_amd64_513 v0.0.0-20190626000307-e137a3934da6 // indirect

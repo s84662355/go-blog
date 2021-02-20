@@ -2,7 +2,7 @@ package es
 
 import (
 	_ "fmt"
-	esc "github.com/olivere/elastic/config"
+	esc "github.com/olivere/elastic/v7/config"
 	_ "github.com/tidwall/gjson"
 	_ "io/ioutil"
 )

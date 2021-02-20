@@ -2,7 +2,7 @@ package canal
 
 import (
 	canalConfig "GoBlog/config/canal"
-	_ "fmt"
+	"fmt"
 	_ "github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/withlin/canal-go/client"
@@ -14,13 +14,15 @@ var canalConnsMap sync.Map
 
 func InitCanal() {
 	for k, v := range canalConfig.Config.Conns {
-		ConnectCanal(v, k)
-	}
 
+		ConnectCanal(v, k)
+		fmt.Println(v)
+		fmt.Println(k)
+		//	return
+	}
 }
 
 func ConnectCanal(config canalConfig.Conn, name string) *client.SimpleCanalConnector {
-
 	connector := client.NewSimpleCanalConnector(config.Address, config.Port, config.Username, config.Password, config.Destination, config.SoTimeOut, config.IdleTimeOut)
 	connector.Connect()
 	connector.Subscribe(config.Subscribe)

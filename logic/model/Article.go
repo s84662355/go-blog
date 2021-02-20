@@ -67,6 +67,10 @@ func (a *Article) SetReadAmount() {
     redisClient.IncrBy(fmt.Sprintf("ReadAmount_%d", a.Id), 1)
 }
 
+func (a Article) SetReadAmountBy(id interface{}) {
+    redisClient.IncrBy(fmt.Sprintf("ReadAmount_%d", id), 1)
+}
+
 func (a *Article) UpdateReadAmount(count int) {
     a.UpdatedAt = helper.JSONTime{}.Create()
     a.Model().Model(&a).Where("read_amount = ?", a.ReadAmount).Update("read_amount", a.ReadAmount+uint64(count))
@@ -129,4 +133,14 @@ func (a Article) List(data map[string]interface{}, page int, size int) map[strin
     //fmt.Println(results)
 
     return map[string]interface{}{"list": results, "paginator": paginatorMap}
+}
+
+func (a Article) GetByCateId(cate_id interface{}) []Article {
+    query := a.Model()
+    query = query.Select(" article.*").Joins("LEFT JOIN cate on article.cate_id = cate.id")
+    query = query.Where("article.cate_id = ?", cate_id)
+    var results []Article
+    query.Unscoped().Scan(&results)
+
+    return results
 }

@@ -5,8 +5,8 @@ import (
 	"context"
 	_ "encoding/json"
 	"fmt"
-	"github.com/olivere/elastic"
-	"github.com/olivere/elastic/config"
+	"github.com/olivere/elastic/v7"
+	"github.com/olivere/elastic/v7/config"
 	"sync"
 )
 

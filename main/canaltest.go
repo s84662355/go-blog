@@ -18,22 +18,56 @@ package main
 
 import (
 	cccc "GoBlog/canal"
+	"GoBlog/es/model"
 	"GoBlog/lib/canal"
+	"GoBlog/lib/es"
+	"GoBlog/lib/mysql"
 	"fmt"
 	//protocol "github.com/withlin/canal-go/protocol"
 )
 
 func main() {
-
+	mysql.InitMysqlConnect()
+	es.InitEsConnect()
 	canal.InitCanal()
 
 	connector := canal.Canal("default")
 
+	fmt.Println(connector)
+
 	cccccc := cccc.InitCanal()
 
 	cccccc.Run(connector, func(ttt cccc.Row) {
-		fmt.Println(ttt)
 
+		columns := ttt.GetColumns()
+		fmt.Println(ttt)
+		for _, col := range columns {
+			fmt.Println(fmt.Sprintf("%s : %s  update= %t", col.GetName(), col.GetValue(), col.GetUpdated()))
+			if col.GetName() == "id" {
+				_, eee := model.Article{}.PostDataById(col.GetValue())
+				fmt.Println(eee)
+			}
+		}
+		//
+	})
+
+	cateccc := cccc.InitCanal()
+	connector1 := canal.Canal("cate")
+
+	cateccc.Run(connector1, func(ttt cccc.Row) {
+
+		columns := ttt.GetColumns()
+		for _, col := range columns {
+			fmt.Println(fmt.Sprintf("%s : %s  update= %t", col.GetName(), col.GetValue(), col.GetUpdated()))
+			if col.GetName() == "id" {
+				ammmr := model.Article{}.GetByCateId(col.GetValue())
+				for _, rrr := range ammmr {
+					rrr.Update()
+				}
+			}
+
+		}
+		//
 	})
 
 	vvvv := make(chan int)

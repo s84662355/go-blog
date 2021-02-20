@@ -1,6 +1,7 @@
 package controller
 
 import (
+	esm "GoBlog/es/model"
 	_ "GoBlog/lib/helper"
 	"GoBlog/logic/controller/response"
 	"GoBlog/logic/model"
@@ -11,36 +12,39 @@ import (
 	"strconv"
 )
 
-type ArticleRequest struct {
-	Page int `json:"page" form:"page" query:"page" validate:"number,min=1"`
-	//Size  int `json:"psize" form:"psize" query:"psize" validate:"number,min=10,max=20"`
-	Title  *string `json:"title" form:"title" query:"title"`
-	CateId int     `json:"cate_id" form:"cate_id" query:"cate_id"`
-}
-
 type ArticleController struct{}
 
 var Article = &ArticleController{}
 
 func (*ArticleController) List(c echo.Context) error {
-
 	params := map[string]interface{}{}
 	if c.QueryParam("title") != "" {
 		params["title"] = c.QueryParam("title")
 	}
-
 	if c.QueryParam("cate_id") != "" {
 		params["cate_id"] = c.QueryParam("cate_id")
 	}
-
 	page, _ := strconv.Atoi(c.QueryParam("page"))
 	size := 10
-	return c.JSON(http.StatusOK, response.Success(model.Article{}.List(params, page, size)))
+	///return c.JSON(http.StatusOK, response.Success(model.Article{}.List(params, page, size)))
+	return c.JSON(http.StatusOK, response.Success(esm.Article{}.Search(params, page, size)))
 }
 
 func (*ArticleController) Info(c echo.Context) error {
-	results := model.Article{}.Info(c.Param("id"))
-	results.SetReadAmount()
+	//	results := model.Article{}.Info(c.Param("id"))
+	//results.SetReadAmount()
+	//	return c.JSON(http.StatusOK, response.Success(results))
+	esr := esm.Article{}.Get(c.Param("id"))
+
+	if esr.Id == 0 {
+		return c.JSON(http.StatusOK, response.Success(nil))
+	}
+
+	if esr.DeletedAt != nil || esr.Status == 0 {
+		return c.JSON(http.StatusOK, response.Success(nil))
+	}
+
+	model.Article{}.SetReadAmountBy(c.Param("id"))
 	service.ReadCountQueue.Push(c.Param("id"), -1)
-	return c.JSON(http.StatusOK, response.Success(results))
+	return c.JSON(http.StatusOK, response.Success(esr))
 }

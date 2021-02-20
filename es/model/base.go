@@ -2,7 +2,7 @@ package model
 
 import (
 	"GoBlog/lib/es"
-	"github.com/olivere/elastic"
+	"github.com/olivere/elastic/v7"
 )
 
 type Base struct {

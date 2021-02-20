@@ -3,6 +3,8 @@ package controller
 import (
 	"GoBlog/admin/controller/response"
 	_ "GoBlog/admin/controller/service"
+
+	esm "GoBlog/es/model"
 	"GoBlog/lib/helper"
 	"GoBlog/logic/model"
 	"encoding/json"
@@ -47,7 +49,11 @@ func (*articleController) List(c echo.Context) error {
 	page, _ := strconv.Atoi(c.QueryParam("page"))
 	size, _ := strconv.Atoi(c.QueryParam("limit"))
 
-	return c.JSON(http.StatusOK, response.ShowData(model.Article{}.List(params, page, size)))
+	esm.Article{}.Search(params, page, size)
+
+	//	return c.JSON(http.StatusOK, response.ShowData(model.Article{}.List(params, page, size)))
+
+	return c.JSON(http.StatusOK, response.ShowData(esm.Article{}.Search(params, page, size)))
 
 }
 

@@ -44,7 +44,7 @@ func (a *Cate) Update() {
 
 func (a Cate) Get(id interface{}) Cate {
 	res := Cate{}
-	a.Model().Where("id = ?", id).Where("deleted_at is null").First(&res)
+	a.Model().Where("id = ?", id).First(&res)
 	return res
 }
 
