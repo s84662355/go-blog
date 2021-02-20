@@ -41,7 +41,6 @@ func (*articleController) List(c echo.Context) error {
 		params["start_date"] = dateValue[0]
 		params["end_date"] = dateValue[1]
 	}
-
 	//fmt.Println(params)
 
 	//dateValue
